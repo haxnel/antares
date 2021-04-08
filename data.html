@@ -10,33 +10,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"></link>
     <title>Selamat Datang</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <script type="text/javascript">
-		//script untuk mendapatkan data dari Node JS
-		$(document).ready(function(){
-			setInterval(function(){
-				$.ajax({
-					url: 'http://localhost:3000/',
-					dataType: 'json',
-					success:function(data){
-						console.log(data);
-						$("#data-jarak").text(data.Jarak); //sesuaikan variabel dengan antares
-						$("#data-suhu").text(data.Temperature); //sesuaikan variabel dengan antares
-						$("#data-hum").text(data.Kelembapan); //sesuaikan variabel dengan antares
-                        $("#success").text("Success to connected"); //sesuaikan variabel dengan antares
-					},
-					error:function(data){
-						$("#data-jarak").text("Loading..."); //sesuaikan variabel dengan antares
-						$("#data-suhu").text("Loading..."); //sesuaikan variabel dengan antares
-						$("#data-hum").text("Loading..."); //sesuaikan variabel dengan antares
-						$("#success").text("Error ...."); //sesuaikan variabel dengan antares
-					}
-				}, 1000);
-			},1000)
-		});
-  </script>
-
+  <script type="text/javascript">
+  $(document).ready(function(){
+      setInterval(function(){
+          $.ajax({
+              url: 'https://morning-woodland-37074.herokuapp.com/https://platform.antares.id:8443/~/antares-cse/antares-id/Smartgarbage/Monitoring/la',
+              method: 'GET',
+              headers: {
+                  'X-M2M-Origin':'c0769d7e2f485191:1a356b543f0d7083',
+                  'Content-Type':'application/json;ty=4',
+                  'Accept':'application/json'
+                },
+                dataType: 'json',
+                success:function(response){
+                    data = JSON.parse(response["m2m:cin"].con);
+                    console.log(data);
+                    $("#data-jarak").text(data.Jarak); //sesuaikan variabel dengan antares
+                    $("#data-suhu").text(data.Temperature); //sesuaikan variabel dengan antares
+                    $("#data-hum").text(data.Kelembapan); //sesuaikan variabel dengan antares
+                    $("#success").text("Connected"); //sesuaikan variabel dengan antares
+                },
+                error:function(data){
+                    $("#data-jarak").text("Loading..."); //sesuaikan variabel dengan antares
+                    $("#data-suhu").text("Loading..."); //sesuaikan variabel dengan antares
+                    $("#data-hum").text("Loading..."); //sesuaikan variabel dengan antares
+                    $("#success").text("Not Connected"); //sesuaikan variabel dengan antares
+                }
+            });
+        },1000)
+    });
+    </script>
 </header>
+
 <body>
 
     <!--Navbar-->
